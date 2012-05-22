@@ -2,6 +2,10 @@ module Templates where
 
 import SimpleHtml1
 
+banner = text "banner"
+navigation = text "navigation"
+bottomInfo = text "bottomInfo" 
+
 template page =
     html $ do
         body $ do
