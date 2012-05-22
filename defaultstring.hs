@@ -31,7 +31,7 @@ import Happstack.Server     ( ServerPart, Method(POST, HEAD, GET), Response
                             , methodM)
 
 import SimpleHtml1
-import Dir.BidVote
+import BidVote
 import qualified Data.ByteString.Lazy.Char8 as C
 
 response h = ok $ toResponse $ doHtml h
@@ -45,7 +45,7 @@ defaultPolicy = (defaultBodyPolicy "/tmp/" 0 50000 1000)
 handlers :: ServerPart Response
 handlers =
     do decodeBody defaultPolicy
-       msum [ dir "bidvote" $ response $ text "bidvote"
+       msum [ dir "BidVote" $ response bidVote
             , mainPage
             ]
 
