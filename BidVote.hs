@@ -39,7 +39,7 @@ bidVote = do
         H.table $ do
           H.tr $ do
             H.td $ do
-                H.div ! A.id "centered" $ "the"
+                center "the"
 
 
 

@@ -10,13 +10,16 @@ title = H.title "BidVote"
 meta = H.meta ! A.charset "utf-8"
 
 setScript = do
-	H.script ! A.src "http://www.defaultstring.com/jQuery/" $ ""
+	H.script ! A.src "../jQuery/" $ ""
 
 style = do
-	H.style ! A.type_ "text/css" $ cssStyle
+ 	H.style ! A.type_ "text/css" $ cssStyle
+
+center = do
+	H.div ! A.id "center"
 
 cssStyle :: Html
 cssStyle = do
-	"body { margin: 0; padding: 0; padding-top: 30px; text-align: center; } "
-	"#centered { width: 700; text-align: center;"
-	" border: 0px; padding: 0; margin: 0 auto; color: WarmSummer; }"
+	"body { margin: 0; width 100%; padding: 0; padding-top: 0; text-align: center; } "
+	"#center { text-align: center; "
+	"border: 0px; padding: 0; margin: 0 auto; color: WarmSummer; } "
