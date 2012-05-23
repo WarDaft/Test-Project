@@ -41,7 +41,7 @@ htmlResponse h = ok $ (toResponse h) {rsHeaders = (mkHeaders [("Content-Type", "
 
 main :: IO ()
 main = do 
-    jQuery <- C.readFile "jQuery.txt"
+    jQuery <- C.readFile "jquery.txt"
     simpleHTTP nullConf {port = 80} $ 
         msum [ dir "jQuery" $ response jQuery
              , dir "BidVote" $ htmlResponse bidVote
