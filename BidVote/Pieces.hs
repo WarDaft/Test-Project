@@ -18,5 +18,5 @@ style = do
 cssStyle :: Html
 cssStyle = do
 	"body { margin: 0; padding: 0; padding-top: 30px; text-align: center; } "
-	"#centered { width: 700; text-align: left;"
+	"#centered { width: 700; text-align: center;"
 	" border: 0px; padding: 0; margin: 0 auto; color: WarmSummer; }"
