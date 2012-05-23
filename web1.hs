@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, DeriveDataTypeable, FlexibleContexts,
+{-# LANGUAGE CPP, DeriveDataTypeable, FlexibleContexts, FlexibleInstances,
     GeneralizedNewtypeDeriving, MultiParamTypeClasses, TemplateHaskell,
     TypeFamilies, RecordWildCards, OverloadedStrings,
     TypeSynonymInstances, NoMonomorphismRestriction #-}
@@ -44,7 +44,7 @@ main = do
     jQuery <- C.readFile "jQuery.txt"
     simpleHTTP nullConf {port = 80} $ 
         msum [ dir "jQuery" $ response jQuery
-             , dir "bidvote" $ htmlResponse bidVote
+             , dir "BidVote" $ htmlResponse bidVote
              , mainPage
              ]
 
