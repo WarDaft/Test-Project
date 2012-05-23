@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP, DeriveDataTypeable, FlexibleContexts,
     GeneralizedNewtypeDeriving, MultiParamTypeClasses, TemplateHaskell,
-    TypeFamilies, RecordWildCards, OverloadedStrings #-}
+    TypeFamilies, RecordWildCards, OverloadedStrings,
+    TypeSynonymInstances, NoMonomorphismRestriction #-}
 
 
 module Main where
@@ -23,32 +24,33 @@ import Data.Text            ( Text )
 import Data.Text.Lazy       ( toStrict )
 import qualified Data.Text  as Text
 import Data.Time            ( UTCTime(..), getCurrentTime )
-import Happstack.Server     ( ServerPart, Method(POST, HEAD, GET), Response
-                            , decodeBody, defaultBodyPolicy, dir, lookRead
-                            , lookText, method, notFound, nullConf
-                            , nullDir, ok, seeOther, simpleHTTP, look
-                            , toResponse, path, BodyPolicy(..), nullConf
-                            , methodM)
+import Happstack.Server
 
-import SimpleHtml1
+import Text.Blaze.Html
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
 import BidVote
 import qualified Data.ByteString.Lazy.Char8 as C
+import Text.Blaze.Renderer.Utf8 (renderMarkup)
 
-response h = ok $ toResponse $ doHtml h
+instance ToMessage Html where
+	toMessage = renderMarkup
+
+response h = ok $ (toResponse h)
+htmlResponse h = ok $ (toResponse h) {rsHeaders = (mkHeaders [("Content-Type", "text/html")])}
 
 main :: IO ()
-main = simpleHTTP nullConf $ handlers
+main = do 
+    jQuery <- C.readFile "jQuery.txt"
+    simpleHTTP nullConf {port = 80} $ 
+        msum [ dir "jQuery" $ response jQuery
+             , dir "bidvote" $ htmlResponse bidVote
+             , mainPage
+             ]
 
 defaultPolicy :: BodyPolicy
 defaultPolicy = (defaultBodyPolicy "/tmp/" 0 50000 1000)
 
-handlers :: ServerPart Response
-handlers =
-    do decodeBody defaultPolicy
-       msum [ dir "BidVote" $ response bidVote
-            , mainPage
-            ]
-
 mainPage :: ServerPart Response
-mainPage = ok $ toResponse ("hi" :: C.ByteString)
+mainPage = ok $ toResponse ("hir" :: C.ByteString)
 

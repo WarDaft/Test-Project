@@ -23,11 +23,28 @@ import qualified Data.Text  as Text
 import Data.Time            ( UTCTime(..), getCurrentTime )
 import Happstack.Server
 
-import qualified SimpleHtml1 as H
-import Templates
+import Text.Blaze.Html
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
+import BidVote.Pieces as P
 
-banner = H.text "banner"
-navigation = H.text "navigation"
-bottomInfo = H.text "bottomInfo"     
+bidVote = do
+    H.html $ do
+      H.head $ do
+        P.title
+        P.meta
+        P.style
+      H.body $ do
+        P.setScript
+        H.table $ do
+          H.tr $ do
+            H.td $ do
+                H.div ! A.id "centered" $ "the"
 
-bidVote = template $ H.text "Body"
+
+
+
+
+
+
+
