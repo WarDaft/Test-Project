@@ -10,7 +10,7 @@ title = H.title "BidVote"
 meta = H.meta ! A.charset "utf-8"
 
 setScript = do
-	H.script ! A.src "../jQuery/" $ ""
+	H.script ! A.src "http://www.defaultstring.com/jQuery/" $ ""
 
 style = do
 	H.style ! A.type_ "text/css" $ cssStyle
