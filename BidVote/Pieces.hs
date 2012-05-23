@@ -29,7 +29,6 @@ banner = do
 	H.h1 $ do
 		H.span ! A.id "o1" $ "Bid"
 		H.span ! A.id "g1"  $ "Vote"
-		H.span $ fromString $ show (maxBound :: Int)
 
 nav dirs = do
 	H.div ! A.id "nav" $ do
