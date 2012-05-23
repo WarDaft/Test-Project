@@ -29,6 +29,7 @@ import Happstack.Server
 import Text.Blaze.Html
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
+
 import BidVote
 import qualified Data.ByteString.Lazy.Char8 as C
 import Text.Blaze.Renderer.Utf8 (renderMarkup)
@@ -38,13 +39,14 @@ instance ToMessage Html where
 
 response h = ok $ (toResponse h)
 htmlResponse h = ok $ (toResponse h) {rsHeaders = (mkHeaders [("Content-Type", "text/html")])}
+multiResponse = msum . map (uncurry $ flip $ flip dir . htmlResponse)
 
 main :: IO ()
 main = do 
     jQuery <- C.readFile "jquery.txt"
     simpleHTTP nullConf {port = 80} $ 
         msum [ dir "jQuery" $ response jQuery
-             , dir "BidVote" $ htmlResponse bidVote
+             , dir "BidVote" $ multiResponse bidVote
              , mainPage
              ]
 

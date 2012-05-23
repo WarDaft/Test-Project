@@ -1,6 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP, DeriveDataTypeable, FlexibleContexts, FlexibleInstances,
+    GeneralizedNewtypeDeriving, MultiParamTypeClasses, TemplateHaskell,
+    TypeFamilies, RecordWildCards, OverloadedStrings,
+    TypeSynonymInstances, NoMonomorphismRestriction #-}
 
-module BidVote where
+module BidVote (bidVote) where
 
 import Control.Applicative  ( (<$>), optional )
 import Control.Exception    ( bracket )
@@ -21,14 +24,20 @@ import Data.Text            ( Text )
 import Data.Text.Lazy       ( toStrict )
 import qualified Data.Text  as Text
 import Data.Time            ( UTCTime(..), getCurrentTime )
-import Happstack.Server
+import Happstack.Server 
 
 import Text.Blaze.Html
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import BidVote.Pieces as P
+import qualified BidVote.Pieces as P
+import qualified Data.ByteString.Lazy.Char8 as C
+import Data.String as S
 
-bidVote = do
+bidVote =  [ (("Home" :: String), home)
+           ]
+
+
+home = do
     H.html $ do
       H.head $ do
         P.title
@@ -36,10 +45,9 @@ bidVote = do
         P.style
       H.body $ do
         P.setScript
-        H.table $ do
-          H.tr $ do
-            H.td $ do
-                center "the"
+        P.content $ do
+          P.banner
+          P.nav $ map (S.fromString . fst) bidVote
 
 
 
